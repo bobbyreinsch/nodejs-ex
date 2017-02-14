@@ -3,6 +3,7 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
+    bodyParser = require('body-parser'),
     methodOverride = require('method-override'), // simulate DELETE and PUT (express4)
     morgan  = require('morgan'),
     mongoose = require('mongoose'),
@@ -10,7 +11,11 @@ var express = require('express'),
 
 Object.assign=require('object-assign')
 
-app.engine('html', require('ejs').renderFile);
+//app.engine('html', require('ejs').renderFile);
+// configuration =================
+app.engine('html', swig.renderFile);
+app.set('view engine', 'html');
+app.set('views', './');
 app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -217,6 +222,7 @@ app.delete('/api/todos/:todo_id', function(req, res) {
         });
     });
 });
+
 
 // application -------------------------------------------------------------
 app.get('*', function(req, res) {
