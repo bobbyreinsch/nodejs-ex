@@ -3,6 +3,7 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
+    methodOverride = require('method-override'), // simulate DELETE and PUT (express4)
     morgan  = require('morgan'),
     mongoose = require('mongoose'),
     swig    = require('swig');
@@ -120,7 +121,7 @@ app.use(methodOverride());
 // routes ======================================================================
 
 
-app.get('/', function (req, res) {
+app.get('/info', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
@@ -131,10 +132,10 @@ app.get('/', function (req, res) {
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
     col.count(function(err, count){
-      res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails });
+      res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
-    res.render('index.html', { pageCountMessage : null});
+    res.render('info.html', { pageCountMessage : null});
   }
 });
 
@@ -158,7 +159,9 @@ app.get('/pagecount', function (req, res) {
 // api ---------------------------------------------------------------------
 // get all todos
 app.get('/api/todos', function(req, res) {
-
+  if (!db) {
+    initDb(function(err){});
+  }
     // use mongoose to get all todos in the database
     Todo.find(function(err, todos) {
 
@@ -172,7 +175,9 @@ app.get('/api/todos', function(req, res) {
 
 // create todo and send back all todos after creation
 app.post('/api/todos', function(req, res) {
-
+  if (!db) {
+    initDb(function(err){});
+  }
     // create a todo, information comes from AJAX request from Angular
     Todo.create({
         text : req.body.text,
@@ -195,6 +200,9 @@ app.post('/api/todos', function(req, res) {
 
 // delete a todo
 app.delete('/api/todos/:todo_id', function(req, res) {
+  if (!db) {
+    initDb(function(err){});
+  }
     Todo.remove({
         _id : req.params.todo_id
     }, function(err, todo) {
@@ -210,6 +218,13 @@ app.delete('/api/todos/:todo_id', function(req, res) {
     });
 });
 
+// application -------------------------------------------------------------
+app.get('*', function(req, res) {
+  if (!db) {
+    initDb(function(err){});
+  }
+  res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
+});
 
 
 // error handling
