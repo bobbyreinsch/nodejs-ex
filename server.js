@@ -3,19 +3,12 @@ var express = require('express'),
     fs      = require('fs'),
     app     = express(),
     eps     = require('ejs'),
-    bodyParser = require('body-parser'),
-    methodOverride = require('method-override'), // simulate DELETE and PUT (express4)
     morgan  = require('morgan'),
-    mongoose = require('mongoose'),
-    swig    = require('swig');
+    mongoose = require('mongoose');
 
 Object.assign=require('object-assign')
 
-//app.engine('html', require('ejs').renderFile);
-// configuration =================
-app.engine('html', swig.renderFile);
-app.set('view engine', 'html');
-app.set('views', './');
+app.engine('html', require('ejs').renderFile);
 app.use(morgan('combined'))
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
@@ -67,13 +60,6 @@ var initDb = function(callback) {
 };
 
 
-// define model =================
-var Todo = mongoose.model('Todo', {
-   text : String,
-   tags: {type: [], index: true },
-   priority: Number
-});
-
 // social sharing - serve og optimized page
 
 var bot_router = express.Router();
@@ -113,20 +99,13 @@ app.use(function(req,res,next){
       next();
     }
 });
-app.use(express.static(__dirname + '/public'));                 // set the static files location /public/img will be /img for users
-app.use(morgan('dev'));                                         // log every request to the console
-app.use(bodyParser.urlencoded({'extended':'true'}));            // parse application/x-www-form-urlencoded
-app.use(bodyParser.json());                                     // parse application/json
-app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
-app.use(methodOverride());
-
 
 
 
 // routes ======================================================================
 
 
-app.get('/info', function (req, res) {
+app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
   if (!db) {
@@ -160,77 +139,6 @@ app.get('/pagecount', function (req, res) {
 });
 
 
-
-// api ---------------------------------------------------------------------
-// get all todos
-app.get('/api/todos', function(req, res) {
-  if (!db) {
-    initDb(function(err){});
-  }
-    // use mongoose to get all todos in the database
-    Todo.find(function(err, todos) {
-
-        // if there is an error retrieving, send the error. nothing after res.send(err) will execute
-        if (err)
-            res.send(err)
-
-        res.json(todos); // return all todos in JSON format
-    });
-});
-
-// create todo and send back all todos after creation
-app.post('/api/todos', function(req, res) {
-  if (!db) {
-    initDb(function(err){});
-  }
-    // create a todo, information comes from AJAX request from Angular
-    Todo.create({
-        text : req.body.text,
-        tags : req.body.tags.split(),
-        priority: req.body.priority,
-        done : false
-    }, function(err, todo) {
-        if (err)
-            res.send(err);
-
-        // get and return all the todos after you create another
-        Todo.find(function(err, todos) {
-            if (err)
-                res.send(err)
-            res.json(todos);
-        });
-    });
-
-});
-
-// delete a todo
-app.delete('/api/todos/:todo_id', function(req, res) {
-  if (!db) {
-    initDb(function(err){});
-  }
-    Todo.remove({
-        _id : req.params.todo_id
-    }, function(err, todo) {
-        if (err)
-            res.send(err);
-
-        // get and return all the todos after you create another
-        Todo.find(function(err, todos) {
-            if (err)
-                res.send(err)
-            res.json(todos);
-        });
-    });
-});
-
-
-// application -------------------------------------------------------------
-app.get('*', function(req, res) {
-  if (!db) {
-    initDb(function(err){});
-  }
-  res.sendFile(__dirname + '/public/index.html'); // load the single view file (angular will handle the page changes on the front-end)
-});
 
 
 // error handling
