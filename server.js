@@ -63,14 +63,29 @@ var initDb = function(callback) {
 // social sharing - serve og optimized page
 
 var bot_router = express.Router();
-bot_router.get('/todo/:id',function(req,res){
+bot_router.get('/:text',function(req,res){
   var page_url = req.protocol + '://' + req.get('host') + req.url;
-  var _id = req.params.id;
 
-  var page_title = 'Test Title'; // this page title
-  var img_url = '/img.jpg'; // page image
-  var page_priority = '6';
+  var page_title = req.params.text; // this page title
+  var page_desc = 'this is the description for ' + page_title + '.';
+  var img_url = page_url + '/img/test.gif'; // page image
   var page_tags = 'tags,tags,many tags';
+
+
+  res.render('bots',{
+    img: img_url,
+    title: page_title,
+    description: page_desc,
+    url: page_url,
+    tags: page_tags
+  });
+
+
+
+/*
+
+// var _id = req.params.id;
+// var page_priority = '6';
 
   if(!_id){id=0}
 
@@ -87,6 +102,7 @@ bot_router.get('/todo/:id',function(req,res){
     });
 
   });
+  */
 });
 
 
