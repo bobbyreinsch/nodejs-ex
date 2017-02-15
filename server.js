@@ -81,10 +81,11 @@ bot_router.get('/:text',function(req,res){
     tags: page_tags
   });
 
+
   bot_router.get('/',function(req,res){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
     res.render('bots',{
-      img: page_url + '/img/test.gif';,
+      img: page_url + '/img/test.gif',
       title: 'OG Test',
       description: 'This is the home page.',
       url: page_url,
