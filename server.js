@@ -135,8 +135,8 @@ app.use(function(req,res,next){
 
 
 app.get('/:textvar',function(req,res){
-
-  res.render('info.html', {pageCountMessage: null, test_text : req.textvar});
+  var test_text = req.textvar;
+  res.render('info.html', {pageCountMessage: null, testText : test_text});
 });
 
 
