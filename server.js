@@ -71,14 +71,12 @@ bot_router.get('/:text',function(req,res){
   var page_title = req.params.text; // this page title
   var page_desc = 'this is the description for ' + page_title + '.';
   var img_url = page_url + '/img/test.gif'; // page image
-  var page_tags = 'tags,tags,many tags';
 
   res.render('bots',{
     img: img_url,
     title: page_title,
     description: page_desc,
-    url: page_url,
-    tags: page_tags
+    url: page_url
   });
 });
 
@@ -88,8 +86,7 @@ bot_router.get('/:text',function(req,res){
       img: page_url + '/img/test.gif',
       title: 'OG Test',
       description: 'This is the home page.',
-      url: page_url,
-      tags: 'no page tags'
+      url: page_url
     });
   });
 
@@ -151,7 +148,7 @@ app.get('/', function (req, res) {
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
     col.count(function(err, count){
-      res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails });
+      res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails, testText: 'No text here'});
     });
   } else {
     res.render('info.html', { pageCountMessage : null, testText:null});
