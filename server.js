@@ -63,6 +63,8 @@ var initDb = function(callback) {
 // social sharing - serve og optimized page
 
 var bot_router = express.Router();
+
+
 bot_router.get('/:text',function(req,res){
   var page_url = req.protocol + '://' + req.get('host') + req.url;
 
@@ -70,7 +72,6 @@ bot_router.get('/:text',function(req,res){
   var page_desc = 'this is the description for ' + page_title + '.';
   var img_url = page_url + '/img/test.gif'; // page image
   var page_tags = 'tags,tags,many tags';
-
 
   res.render('bots',{
     img: img_url,
@@ -80,7 +81,16 @@ bot_router.get('/:text',function(req,res){
     tags: page_tags
   });
 
-
+  bot_router.get('/',function(req,res){
+    var page_url = req.protocol + '://' + req.get('host') + req.url;
+    res.render('bots',{
+      img: page_url + '/img/test.gif';,
+      title: 'OG Test',
+      description: 'This is the home page.',
+      url: page_url,
+      tags: 'no page tags'
+    });
+  }
 
 /*
 
