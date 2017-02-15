@@ -135,7 +135,7 @@ app.use(function(req,res,next){
 
 
 app.get('/:textvar',function(req,res){
-  var test_text = req.textvar;
+  var test_text = req.params.textvar;
   res.render('info.html', {pageCountMessage: null, testText : test_text});
 });
 
@@ -154,7 +154,7 @@ app.get('/', function (req, res) {
       res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails });
     });
   } else {
-    res.render('info.html', { pageCountMessage : null});
+    res.render('info.html', { pageCountMessage : null, testText:null});
   }
 });
 
