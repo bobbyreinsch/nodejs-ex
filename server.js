@@ -112,14 +112,16 @@ bot_router.get('/:text',function(req,res){
     });
 
   });
-  */
+
 });
+
+*/
 
 
 app.use(function(req,res,next){
    var ua = req.headers['user-agent'];
     if(/^(facebookexternalhit)|(Twitterbot)|(Pinterest)/gi.test(ua)){
-     console.log(ua, ' gets sent elsewhere.');
+     console.log(ua, ' gets served the OG template.');
      bot_router(req,res,next);
     }else{
       next();
