@@ -81,6 +81,7 @@ bot_router.get('/:text',function(req,res){
     tags: page_tags
   });
 
+
   bot_router.get('/',function(req,res){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
     res.render('bots',{
