@@ -80,7 +80,7 @@ bot_router.get('/:text',function(req,res){
     url: page_url,
     tags: page_tags
   });
-
+});
 
   bot_router.get('/',function(req,res){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
@@ -91,6 +91,7 @@ bot_router.get('/:text',function(req,res){
       url: page_url,
       tags: 'no page tags'
     });
+  });
 
 /*
 
@@ -182,4 +183,4 @@ initDb(function(err){
 app.listen(port, ip);
 console.log('Server running on http://%s:%s', ip, port);
 
-module.exports = app ;
+module.exports = app;
