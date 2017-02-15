@@ -91,7 +91,6 @@ bot_router.get('/:text',function(req,res){
       url: page_url,
       tags: 'no page tags'
     });
-  }
 
 /*
 
