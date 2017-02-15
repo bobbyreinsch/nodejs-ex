@@ -134,6 +134,12 @@ app.use(function(req,res,next){
 // routes ======================================================================
 
 
+app.get('/:textvar',function(req,res){
+
+  res.render('info.html', {pageCountMessage: null, test_text : req.textvar});
+});
+
+
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
