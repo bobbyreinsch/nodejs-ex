@@ -176,7 +176,8 @@ app.get('/pagecount', function (req, res) {
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  res.status(500).send('Something bad happened!');
+  res.status(500).send('Oh Nos! ' + err.stack);
+  //res.status(500).send('Something bad happened!');
 });
 
 initDb(function(err){
