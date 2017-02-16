@@ -83,13 +83,13 @@ bot_router.get('/:text',function(req,res,next){
 
   bot_router.get('/',function(req,res,next){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
-  /*  res.render('bots.html',{
-      img: page_url + '/img/test.gif',
+    res.render('bots.html',{
+    //  img: page_url + '/img/test.gif',
       title: 'OG Test',
-      description: 'This is the home page.',
-      url: page_url
-    }); */
-    res.render('bots.html');
+    //  description: 'This is the home page.',
+    //  url: page_url
+    });
+    /* res.render('bots.html');  */
   });
 
 /*
