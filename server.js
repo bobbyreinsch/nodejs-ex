@@ -74,10 +74,10 @@ bot_router.get('/:text',function(req,res,next){
   var img_url = page_url + '/img/test.gif'; // page image
 
   res.render('bots.html',{
-    /*img: img_url,
+    // img: img_url,
     title: page_title,
-    description: page_desc,
-    url: page_url*/
+    // description: page_desc,
+    // url: page_url
   });
 });
 
