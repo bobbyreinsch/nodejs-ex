@@ -72,21 +72,21 @@ bot_router.get('/:text',function(req,res){
   var page_desc = 'this is the description for ' + page_title + '.';
   var img_url = page_url + '/img/test.gif'; // page image
 
-  res.render('bots',{
-    img: img_url,
+  res.render('bots.html',{
+    /*img: img_url,
     title: page_title,
     description: page_desc,
-    url: page_url
+    url: page_url*/
   });
 });
 
   bot_router.get('/',function(req,res){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
-    res.render('bots',{
-      img: page_url + '/img/test.gif',
+    res.render('bots.html',{
+    /*  img: page_url + '/img/test.gif',
       title: 'OG Test',
       description: 'This is the home page.',
-      url: page_url
+      url: page_url */
     });
   });
 
