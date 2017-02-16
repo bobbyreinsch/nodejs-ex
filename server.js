@@ -77,7 +77,7 @@ bot_router.get('/:text',function(req,res,next){
     // img: img_url,
     title: page_title,
     // description: page_desc,
-    // url: page_url
+    url: page_url
   });
 });
 
@@ -87,7 +87,7 @@ bot_router.get('/:text',function(req,res,next){
     //  img: page_url + '/img/test.gif',
       title: 'OG Test',
     //  description: 'This is the home page.',
-    //  url: page_url
+      url: page_url
     });
     /* res.render('bots.html');  */
   });
