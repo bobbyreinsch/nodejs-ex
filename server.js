@@ -65,7 +65,7 @@ var initDb = function(callback) {
 var bot_router = express.Router();
 
 
-bot_router.get('/:text',function(req,res){
+bot_router.get('/:text',function(req,res,next){
   var page_url = req.protocol + '://' + req.get('host') + req.url;
 
   var page_title = req.params.text; // this page title
@@ -80,14 +80,15 @@ bot_router.get('/:text',function(req,res){
   });
 });
 
-  bot_router.get('/',function(req,res){
+  bot_router.get('/',function(req,res,next){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
-    res.render('bots.html',{
-    /*  img: page_url + '/img/test.gif',
+  /*  res.render('bots.html',{
+      img: page_url + '/img/test.gif',
       title: 'OG Test',
       description: 'This is the home page.',
-      url: page_url */
-    });
+      url: page_url
+    }); */
+    res.render('bots.html');
   });
 
 /*
@@ -176,7 +177,7 @@ app.get('/pagecount', function (req, res) {
 // error handling
 app.use(function(err, req, res, next){
   console.error(err.stack);
-  res.status(500).send('Oh Nos! ' + err.stack);
+  res.status(500).send('Oh Nos! <pre>' + err.stack + '</pre>');
   //res.status(500).send('Something bad happened!');
 });
 
