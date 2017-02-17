@@ -11,7 +11,7 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','ejs');
 app.use(morgan('combined'));
-app.use(express.static('public'));
+//app.use(express.static('public'));
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
     ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
@@ -72,7 +72,7 @@ bot_router.get('/:text',function(req,res,next){
 
   var page_title = req.params.text; // this page title
   var page_desc = 'this is the description for ' + page_title + '.';
-  var img_url = req.protocol + '://' + req.get('host') + '/img/test.gif'; // page image
+  var img_url = req.protocol + '://' + req.get('host') + '/public/img/test.gif'; // page image
 
   res.render('bots.html',{
     img: img_url,
@@ -85,7 +85,7 @@ bot_router.get('/:text',function(req,res,next){
   bot_router.get('/',function(req,res,next){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
     res.render('bots.html',{
-      img: page_url + '/img/test.gif',
+      img: page_url + '/public/img/test.gif',
       title: 'OG Test: Home Page',
       description: 'This is the home page.',
       url: page_url
