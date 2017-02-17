@@ -72,7 +72,7 @@ bot_router.get('/:text',function(req,res,next){
 
   var page_title = req.params.text; // this page title
   var page_desc = 'this is the description for ' + page_title + '.';
-  var img_url = req.protocol + '://' + req.get('host') + '/public/img/test.gif'; // page image
+  var img_url = req.protocol + '://' + req.get('host') + 'mb.gif'; // page image
 
   res.render('bots.html',{
     img: img_url,
@@ -85,7 +85,7 @@ bot_router.get('/:text',function(req,res,next){
   bot_router.get('/',function(req,res,next){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
     res.render('bots.html',{
-      img: page_url + '/public/img/test.gif',
+      img: page_url + 'mb.gif',
       title: 'OG Test: Home Page',
       description: 'This is the home page.',
       url: page_url
