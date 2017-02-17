@@ -11,6 +11,7 @@ Object.assign=require('object-assign')
 app.engine('html', require('ejs').renderFile);
 app.set('view engine','ejs');
 app.use(morgan('combined'));
+app.use(express.static('static'));
 //app.use(express.static('public'));
 
 var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
