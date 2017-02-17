@@ -74,9 +74,9 @@ bot_router.get('/:text',function(req,res,next){
   var img_url = page_url + '/img/test.gif'; // page image
 
   res.render('bots.html',{
-    // img: img_url,
+    img: img_url,
     title: page_title,
-    // description: page_desc,
+    description: page_desc,
     url: page_url
   });
 });
@@ -84,9 +84,9 @@ bot_router.get('/:text',function(req,res,next){
   bot_router.get('/',function(req,res,next){
     var page_url = req.protocol + '://' + req.get('host') + req.url;
     res.render('bots.html',{
-    //  img: page_url + '/img/test.gif',
-      title: 'OG Test',
-    //  description: 'This is the home page.',
+      img: page_url + '/img/test.gif',
+      title: 'OG Test: Home Page',
+      description: 'This is the home page.',
       url: page_url
     });
     /* res.render('bots.html');  */
