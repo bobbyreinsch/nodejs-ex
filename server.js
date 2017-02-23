@@ -136,14 +136,17 @@ app.use(function(req,res,next){
 
 
 app.get('/:textvar',function(req,res){
+  var page_url = req.protocol + '://' + req.get('host') + req.url;
   var test_text = req.params.textvar;
-  res.render('info.html', {pageCountMessage: null, testText : test_text});
+  res.render('info.html', {pageCountMessage: null, testText : test_text, url: encodeURIComponent(page_url) });
 });
 
 
 app.get('/', function (req, res) {
   // try to initialize the db on every request if it's not already
   // initialized.
+  var page_url = req.protocol + '://' + req.get('host') + req.url;
+
   if (!db) {
     initDb(function(err){});
   }
@@ -152,10 +155,10 @@ app.get('/', function (req, res) {
     // Create a document with request IP and current time of request
     col.insert({ip: req.ip, date: Date.now()});
     col.count(function(err, count){
-      res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails, testText: 'No text here'});
+      res.render('info.html', { pageCountMessage : count, dbInfo: dbDetails, testText: 'No text here', url: encodeURIComponent(page_url) });
     });
   } else {
-    res.render('info.html', { pageCountMessage : null, testText:null});
+    res.render('info.html', { pageCountMessage : null, testText:null, url: encodeURIComponent(page_url) });
   }
 });
 
